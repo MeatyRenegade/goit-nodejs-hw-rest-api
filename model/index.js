@@ -1,22 +1,21 @@
 const fs = require('fs/promises')
 const path = require('path')
+const { v4: uuidv4 } = require('uuid')
 
-const contactsPath = path.join(__dirname, './contacts.json')
+const filePath = path.join(__dirname, './contacts.json')
 
-const update = async contacts => {
-  const contactsToString = JSON.stringify(contacts)
-  await fs.writeFile(contactsPath, contactsToString)
+const update = async data => {
+  await fs.writeFile(filePath, JSON.stringify(data))
 }
 
 const listContacts = async () => {
-  const data = await fs.readFile(contactsPath)
+  const data = await fs.readFile(filePath)
   return JSON.parse(data)
 }
 
 const getContactById = async contactId => {
   const contacts = await listContacts()
   const selectedContact = contacts.find(item => item.id === contactId)
-
   if (!selectedContact) {
     return null
   }
@@ -27,22 +26,16 @@ const removeContact = async contactId => {
   const contacts = await listContacts()
   const index = contacts.findIndex(item => item.id === contactId)
   if (index === -1) {
-    throw new Error(`Contact with id=${contactId} not found`)
+    return null
   }
   const newContacts = contacts.filter(item => item.id !== contactId)
-  await fs.writeFile(contactsPath, JSON.stringify(newContacts))
+  await update(newContacts)
   return contacts[index]
 }
 
 const addContact = async body => {
   const contacts = await listContacts()
-  const { id, name, email, phone } = body
-  const newContact = {
-    id,
-    name,
-    email,
-    phone,
-  }
+  const newContact = { id: uuidv4(), ...body }
   contacts.push(newContact)
   await update(contacts)
   return newContact
@@ -50,6 +43,13 @@ const addContact = async body => {
 
 const updateContact = async (contactId, body) => {
   const contacts = await listContacts()
+  const index = contacts.findIndex(item => item.id === contactId)
+  if (index === -1) {
+    return null
+  }
+  contacts[index] = { ...contacts[index], ...body }
+  await update(contacts)
+  return contacts[index]
 }
 
 module.exports = {
