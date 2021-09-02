@@ -1,7 +1,7 @@
 const data = require('../../model')
 const { contactSchema } = require('../../validation')
 
-const update = async (req, res, next) => {
+const updateById = async (req, res, next) => {
   try {
     const { error } = contactSchema.validate(req.body)
 
@@ -32,4 +32,4 @@ const update = async (req, res, next) => {
   }
 }
 
-module.exports = update
+module.exports = updateById

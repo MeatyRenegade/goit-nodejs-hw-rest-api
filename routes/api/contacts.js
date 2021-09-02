@@ -11,6 +11,6 @@ router.post('/', ctrl.add)
 
 router.delete('/:contactId', ctrl.remove)
 
-router.put('/:contactId', ctrl.update)
+router.put('/:contactId', ctrl.updateById)
 
 module.exports = router
