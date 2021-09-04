@@ -1,11 +1,11 @@
-const data = require('../../model')
+const { Contact } = require('../../models')
 
 const getById = async (req, res, next) => {
   try {
     const { contactId } = req.params
-    const selectedContact = await data.getContactById(contactId)
+    const contact = await Contact.findById(contactId)
 
-    if (!selectedContact) {
+    if (!contact) {
       return res.status(404).json({
         message: 'Not found',
       })
@@ -15,7 +15,7 @@ const getById = async (req, res, next) => {
       status: 'success',
       code: 200,
       data: {
-        result: selectedContact,
+        result: contact,
       },
     })
   } catch (error) {
