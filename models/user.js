@@ -6,16 +6,16 @@ const emailRegexp =
 
 const userSchema = Schema(
   {
-    password: {
-      type: String,
-      minlength: 6,
-      required: [true, 'Password is required'],
-    },
     email: {
       type: String,
       match: emailRegexp,
       unique: true,
       required: [true, 'Email is required'],
+    },
+    password: {
+      type: String,
+      minlength: 6,
+      required: [true, 'Password is required'],
     },
     subscription: {
       type: String,
@@ -31,8 +31,8 @@ const userSchema = Schema(
 )
 
 const joiSchema = Joi.object({
-  password: Joi.string().min(6).required(),
   email: Joi.string().pattern(emailRegexp).required(),
+  password: Joi.string().min(6).required(),
   subscription: Joi.string(),
   token: Joi.string(),
 })

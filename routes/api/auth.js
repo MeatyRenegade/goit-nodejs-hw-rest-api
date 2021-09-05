@@ -10,7 +10,7 @@ const userValidationMiddleware = validation(joiSchema)
 
 router.post('/register', userValidationMiddleware, ctrl.register)
 
-// router.post('login', ctrl.login)
+router.post('login', userValidationMiddleware, ctrl.login)
 
 // router.get('logout', ctrl.logout)
 
