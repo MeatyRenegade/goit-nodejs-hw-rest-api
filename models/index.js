@@ -1,5 +1,5 @@
 const { Contact } = require('./contact')
-const { User } = require('./auth')
+const { User } = require('./user')
 
 module.exports = {
   Contact,

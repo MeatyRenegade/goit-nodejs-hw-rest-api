@@ -12,13 +12,11 @@ const register = async (req, res, next) => {
       })
     }
     const result = await User.create({ email, password })
+
     res.status(201).json({
       status: 'success',
       code: 201,
-      message: "Successfully registered"
-      data: {
-        result,
-      },
+      message: 'Successfully registered',
     })
   } catch (error) {
     next(error)
