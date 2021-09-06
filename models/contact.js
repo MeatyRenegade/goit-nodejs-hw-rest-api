@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose')
+const { Schema, Types, model } = require('mongoose')
 const Joi = require('Joi')
 
 const emailRegexp = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/
@@ -22,7 +22,12 @@ const contactSchema = Schema(
     },
     favorite: {
       type: Boolean,
+      required: true,
       default: false,
+    },
+    owner: {
+      type: Types.ObjectId,
+      ref: 'user',
       required: true,
     },
   },
