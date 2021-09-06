@@ -1,9 +1,10 @@
 const express = require('express')
-const router = express.Router()
 
 const { joiSchema } = require('../../models/contact')
 const { validation } = require('../../middlewares')
 const { contacts: ctrl } = require('../../controllers')
+
+const router = express.Router()
 
 const contactValidationMiddleware = validation(joiSchema)
 
