@@ -1,9 +1,11 @@
-const register = require('./register')
+const signup = require('./signup')
 const login = require('./login')
-// const logout = require('./logout')
+const logout = require('./logout')
+const getCurrent = require('./getCurrent')
 
 module.exports = {
-  register,
+  signup,
   login,
-  // logout
+  logout,
+  getCurrent,
 }

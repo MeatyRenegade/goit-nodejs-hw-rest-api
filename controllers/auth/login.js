@@ -9,13 +9,13 @@ const login = async (req, res) => {
   const user = await User.findOne({ email })
 
   if (!user) {
-    throw new BadRequest('Wrong email')
+    throw new BadRequest('Email or password is wrong')
   }
   const hashPassword = user.password
   const compareResult = bcrypt.compareSync(password, hashPassword)
 
   if (!compareResult) {
-    throw new BadRequest('Wrong password')
+    throw new BadRequest('Email or password is wrong')
   }
 
   const payload = {
@@ -24,6 +24,7 @@ const login = async (req, res) => {
 
   const { SECRET_KEY } = process.env
   const token = jwt.sign(payload, SECRET_KEY)
+  await User.findByIdAndUpdate(user._id, { token })
 
   res.json({
     token,
