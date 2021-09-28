@@ -7,8 +7,9 @@ const { User } = require('../../models')
 const avatarsDir = path.join(__dirname, '../../', 'public/avatars')
 
 const updateAvatar = async (req, res) => {
-  const { id } = req.params
+  const { id } = req.user
   const { path: tempPath, originalname } = req.file
+
   const uploadPath = path.join(avatarsDir, id, originalname)
   try {
     const file = await Jimp.read(tempPath)
@@ -16,7 +17,7 @@ const updateAvatar = async (req, res) => {
 
     await fs.rename(tempPath, uploadPath)
 
-    const avatarUrl = `/public/avatars/${id}/${originalname}`
+    const avatarUrl = `/avatars/${id}/${originalname}`
     await User.findByIdAndUpdate(id, { avatarUrl })
 
     res.json({

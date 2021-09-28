@@ -30,7 +30,8 @@ router.get(
 )
 
 router.patch(
-  '/:id',
+  '/avatars',
+  controllerWrapper(authenticate),
   upload.single('image'),
   controllerWrapper(ctrl.updateAvatar),
 )
