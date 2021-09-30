@@ -36,4 +36,8 @@ router.patch(
   controllerWrapper(ctrl.updateAvatar),
 )
 
+router.get('/verify/:verificationToken', controllerWrapper(ctrl.verifyMail))
+
+router.post('/verify', controllerWrapper(ctrl.resendMail))
+
 module.exports = router
