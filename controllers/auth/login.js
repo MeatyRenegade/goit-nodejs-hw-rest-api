@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { BadRequest } = require('http-errors')
+const { BadRequest, Unauthorized } = require('http-errors')
 
 const { User } = require('../../models')
 
@@ -11,6 +11,10 @@ const login = async (req, res) => {
   if (!user) {
     throw new BadRequest('Email or password is wrong')
   }
+  if (!user.verify) {
+    throw new Unauthorized('Email is not verified')
+  }
+
   const hashPassword = user.password
   const compareResult = bcrypt.compareSync(password, hashPassword)
 
@@ -21,7 +25,6 @@ const login = async (req, res) => {
   const payload = {
     id: user._id,
   }
-
   const { SECRET_KEY } = process.env
   const token = jwt.sign(payload, SECRET_KEY)
   await User.findByIdAndUpdate(user._id, { token })
