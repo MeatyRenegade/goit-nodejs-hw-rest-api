@@ -1,6 +1,3 @@
-[![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=meatyrenegade)](https://github.com/anuraghazra/github-readme-stats)
-
-
 ## GoIT Node.js Course Template Homework
 
 Выполните форк этого репозитория для выполнения домашних заданий (2-6)
